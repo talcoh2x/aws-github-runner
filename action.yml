@@ -34,5 +34,5 @@ outputs:
     description: 'EC2 Instance ID of the runner'
 
 runs:
-using: 'docker'
-image: 'Dockerfile'
+  using: 'docker'
+  image: 'Dockerfile'
