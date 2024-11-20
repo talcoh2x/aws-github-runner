@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -32,11 +33,18 @@ func main() {
 		SubnetID:         githubactions.GetInput("subnet-id"),
 		SecurityGroupID:  githubactions.GetInput("security-group-id"),
 		IamInstanceRole:  githubactions.GetInput("iam-instance-role"),
-		AWSResourceTags:  githubactions.GetInput("aws-resource-tags"),
 		RepositoryURL:    os.Getenv("GITHUB_REPOSITORY"),
 		SpotInstanceType: githubactions.GetInput("spot-instance") == "true",
 		SpotPrice:        githubactions.GetInput("spot-price"),
 	}
+
+	// Parse resource tags if provided
+	if tagsStr := githubactions.GetInput("aws-resource-tags"); tagsStr != "" {
+		if err := json.Unmarshal([]byte(tagsStr), &config.AWSResourceTags); err != nil {
+			githubactions.Fatalf("Failed to parse AWS resource tags: %v", err)
+		}
+	}
+
 	// Use the config values
 	fmt.Println("Mode:", config.Mode)
 	fmt.Println("GitHub Token:", config.GitHubToken)
