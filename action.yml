@@ -1,0 +1,38 @@
+name: 'AWS GitHub Runner'
+description: 'Start or stop self-hosted AWS GitHub runners'
+branding:
+  icon: 'cloud'
+  color: 'blue'
+inputs:
+  mode:
+    description: 'Mode of operation (start/stop)'
+    required: true
+  github-token:
+    description: 'GitHub Personal Access Token'
+    required: true
+  ec2-image-id:
+    description: 'AWS EC2 AMI ID'
+    required: true
+  ec2-instance-type:
+    description: 'EC2 Instance Type'
+    required: false
+    default: 't2.micro'
+  subnet-id:
+    description: 'Subnet ID for EC2 instance'
+    required: true
+  security-group-id:
+    description: 'Security Group ID for EC2 instance'
+    required: true
+  aws-resource-tags:
+    description: 'JSON formatted AWS resource tags'
+    required: false
+
+outputs:
+  label:
+    description: 'Generated runner label'
+  ec2-instance-id:
+    description: 'EC2 Instance ID of the runner'
+
+runs:
+using: 'docker'
+image: 'Dockerfile'
