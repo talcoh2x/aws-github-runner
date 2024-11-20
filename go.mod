@@ -1,4 +1,4 @@
-module github.com/Elmnt-Internal/aws-github-runner
+module github.com/talcoh2x/aws-github-runner
 
 go 1.22.5
 
