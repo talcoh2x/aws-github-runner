@@ -17,15 +17,27 @@ inputs:
     description: 'EC2 Instance Type'
     required: false
     default: 't2.micro'
+  spot-instance:
+    description: 'Use Spot Instance'
+    required: false
+    default: 'false'
+  spot-price:
+    description: 'Maximum price for Spot Instance'
+    required: false
+    default: '0.10'
   subnet-id:
     description: 'Subnet ID for EC2 instance'
     required: true
   security-group-id:
     description: 'Security Group ID for EC2 instance'
     required: true
+  iam-instance-role:
+    description: 'IAM Instance Role name'
+    required: false
   aws-resource-tags:
     description: 'JSON formatted AWS resource tags'
     required: false
+    default: '[]'
 
 outputs:
   label:

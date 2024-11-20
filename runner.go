@@ -2,30 +2,40 @@ package main
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/sethvargo/go-githubactions"
 )
 
 type RunnerConfig struct {
-	Mode            string `json:"Mode"`
-	GitHubToken     string `json:"GitHubToken"`
-	EC2ImageID      string `json:"EC2ImageID"`
-	EC2InstanceType string `json:"EC2InstanceType"`
-	SubnetID        string `json:"SubnetID"`
-	SecurityGroupID string `json:"SecurityGroupID"`
-	AWSResourceTags string `json:"AWSResourceTags"`
+	Mode             string
+	GitHubToken      string
+	EC2ImageID       string
+	EC2InstanceType  string
+	SubnetID         string
+	SecurityGroupID  string
+	IamInstanceRole  string
+	AWSResourceTags  []types.Tag
+	RepositoryURL    string
+	SpotInstanceType bool
+	SpotPrice        string
 }
 
 func main() {
 	// Retrieve configuration from GitHub Actions inputs
 	config := RunnerConfig{
-		Mode:            githubactions.GetInput("mode"),
-		GitHubToken:     githubactions.GetInput("github-token"),
-		EC2ImageID:      githubactions.GetInput("ec2-imageid"),
-		EC2InstanceType: githubactions.GetInput("ec2-instance_type"),
-		SubnetID:        githubactions.GetInput("subnet-id"),
-		SecurityGroupID: githubactions.GetInput("security-group-id"),
-		AWSResourceTags: githubactions.GetInput("aws-resource-tags"),
+		Mode:             githubactions.GetInput("mode"),
+		GitHubToken:      githubactions.GetInput("github-token"),
+		EC2ImageID:       githubactions.GetInput("ec2-image-id"),
+		EC2InstanceType:  githubactions.GetInput("ec2-instance-type"),
+		SubnetID:         githubactions.GetInput("subnet-id"),
+		SecurityGroupID:  githubactions.GetInput("security-group-id"),
+		IamInstanceRole:  githubactions.GetInput("iam-instance-role"),
+		AWSResourceTags:  githubactions.GetInput("aws-resource-tags"),
+		RepositoryURL:    os.Getenv("GITHUB_REPOSITORY"),
+		SpotInstanceType: githubactions.GetInput("spot-instance") == "true",
+		SpotPrice:        githubactions.GetInput("spot-price"),
 	}
 	// Use the config values
 	fmt.Println("Mode:", config.Mode)
@@ -34,7 +44,11 @@ func main() {
 	fmt.Println("EC2 Instance Type:", config.EC2InstanceType)
 	fmt.Println("Subnet ID:", config.SubnetID)
 	fmt.Println("Security Group ID:", config.SecurityGroupID)
+	fmt.Println("IAM Instance Role:", config.IamInstanceRole)
 	fmt.Println("AWS Resource Tags:", config.AWSResourceTags)
+	fmt.Println("Repository URL:", config.RepositoryURL)
+	fmt.Println("Spot Instance Type:", config.SpotInstanceType)
+	fmt.Println("Spot Price:", config.SpotPrice)
 }
 
 // package main
