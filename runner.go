@@ -20,12 +20,12 @@ func main() {
 	// Retrieve configuration from GitHub Actions inputs
 	config := RunnerConfig{
 		Mode:            githubactions.GetInput("mode"),
-		GitHubToken:     githubactions.GetInput("github_token"),
-		EC2ImageID:      githubactions.GetInput("ec2_image_id"),
-		EC2InstanceType: githubactions.GetInput("ec2_instance_type"),
-		SubnetID:        githubactions.GetInput("subnet_id"),
-		SecurityGroupID: githubactions.GetInput("security_group_id"),
-		AWSResourceTags: githubactions.GetInput("aws_resource_tags"),
+		GitHubToken:     githubactions.GetInput("github-token"),
+		EC2ImageID:      githubactions.GetInput("ec2-imageid"),
+		EC2InstanceType: githubactions.GetInput("ec2-instance_type"),
+		SubnetID:        githubactions.GetInput("subnet-id"),
+		SecurityGroupID: githubactions.GetInput("security-group-id"),
+		AWSResourceTags: githubactions.GetInput("aws-resource-tags"),
 	}
 	// Use the config values
 	fmt.Println("Mode:", config.Mode)
