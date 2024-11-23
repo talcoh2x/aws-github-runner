@@ -1,5 +1,5 @@
-name: 'AWS GitHub Runner'
-description: 'Start or stop self-hosted AWS GitHub runners'
+name: 'AWS GitHub Runner Management'
+description: 'self-hosted AWS GitHub runners management'
 branding:
   icon: 'cloud'
   color: 'blue'
@@ -7,9 +7,19 @@ inputs:
   mode:
     description: 'Mode of operation (start/stop)'
     required: true
+    options: ['start', 'stop']
   github-token:
     description: 'GitHub Personal Access Token'
     required: true
+  github-token-type:
+    description: 'GitHub Token Type'
+    required: false
+    default: 'legacy'
+    options: ['legacy', 'fine-grained']
+  github-org-runner:
+    description: 'GitHub Organization Runner (true/false)'
+    required: false
+    default: 'false'
   ec2-image-id:
     description: 'AWS EC2 AMI ID'
     required: true
