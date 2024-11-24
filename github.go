@@ -83,6 +83,7 @@ func (r *GitHubClient) WaitForRunnerRegistered(ctx context.Context, label string
 
 			for _, runner := range runners.Runners {
 				if runner.GetName() == label && runner.GetStatus() == "online" {
+					fmt.Printf("GitHub self-hosted runner %s is registered and ready to use\n", runner.GetName())
 					return nil
 				}
 			}

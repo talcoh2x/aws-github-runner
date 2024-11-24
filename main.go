@@ -96,6 +96,7 @@ func (r *Runner) StartRunner(ctx context.Context) error {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
+		fmt.Println("Waiting for instance to be ready...")
 		if err := r.ec2Client.WaitForState(waitCtx, *r.instanceID); err != nil {
 			errChan <- err
 			cancel()
@@ -105,6 +106,7 @@ func (r *Runner) StartRunner(ctx context.Context) error {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
+		fmt.Println("Waiting for runner to register...")
 		if err := r.githubClient.WaitForRunnerRegistered(waitCtx, r.runnerLabel); err != nil {
 			errChan <- err
 			cancel()
