@@ -15,20 +15,17 @@ import (
 	"github.com/sethvargo/go-githubactions"
 )
 
-type SpotConfig struct {
-	ProvisioningMode string
-	Region           string
-}
 type EC2RunnerConfig struct {
-	EC2ImageID      string
-	EC2InstanceType string
-	SubnetID        string
-	SecurityGroupID string
-	IamInstanceRole string
-	AWSResourceTags []types.Tag
-	RepositoryURL   string
-	SpotInstance    bool
-	Spot            SpotConfig
+	EC2ImageID           string
+	EC2InstanceType      string
+	SubnetID             string
+	SecurityGroupID      string
+	IamInstanceRole      string
+	AWSResourceTags      []types.Tag
+	RepositoryURL        string
+	SpotInstance         bool
+	SpotProvisioningMode string
+	Region               string
 }
 
 type GithubRunnerConfig struct {
@@ -187,17 +184,15 @@ func main() {
 			GitHubOrgRunner: githubactions.GetInput("github-org-runner") == "true",
 		},
 		EC2RunnerConfig: &EC2RunnerConfig{
-			EC2ImageID:      githubactions.GetInput("ec2-image-id"),
-			EC2InstanceType: githubactions.GetInput("ec2-instance-type"),
-			SubnetID:        githubactions.GetInput("subnet-id"),
-			SecurityGroupID: githubactions.GetInput("security-group-id"),
-			IamInstanceRole: githubactions.GetInput("iam-instance-role"),
-			RepositoryURL:   os.Getenv("GITHUB_REPOSITORY"),
-			SpotInstance:    githubactions.GetInput("spot-instance") == "true",
-			Spot: SpotConfig{
-				ProvisioningMode: githubactions.GetInput("spot-provisioning-mode"),
-				Region:           githubactions.GetInput("spot-region"),
-			},
+			EC2ImageID:           githubactions.GetInput("ec2-image-id"),
+			EC2InstanceType:      githubactions.GetInput("ec2-instance-type"),
+			SubnetID:             githubactions.GetInput("subnet-id"),
+			SecurityGroupID:      githubactions.GetInput("security-group-id"),
+			IamInstanceRole:      githubactions.GetInput("iam-instance-role"),
+			RepositoryURL:        os.Getenv("GITHUB_REPOSITORY"),
+			SpotInstance:         githubactions.GetInput("spot-instance") == "true",
+			SpotProvisioningMode: githubactions.GetInput("spot-provisioning-mode"),
+			Region:               githubactions.GetInput("spot-region"),
 		},
 	}
 
